@@ -29,13 +29,16 @@ public class ApiCaller {
     public static final String TAG = ApiCaller.class.getSimpleName();
 
     public void getVehicleLocation(String vehicleId) {
-        String url = NetworkConstants.TRIMET_VEHICLES_API + "ids/" + vehicleId + ApiConstants.TRIMET_QUERY_SUFFIX;
+        String url = NetworkConstants.TRIMET_VEHICLES_API + "ids/" + vehicleId + "/" + ApiConstants.TRIMET_QUERY_SUFFIX;
+
+        Log.d(TAG, "url = " + url);
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    JSONArray vehicles = response.getJSONArray("vehicle");
+                    JSONObject resultSet = response.getJSONObject("resultSet");
+                    JSONArray vehicles = resultSet.getJSONArray("vehicle");
                     JSONObject vehicle = vehicles.getJSONObject(0);
 
                     float longitude = (float) vehicle.getDouble("longitude");
@@ -54,6 +57,8 @@ public class ApiCaller {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
             }
         });
+
+        Log.d(TAG, "req = " + req);
         // avoid data caching on the device, which can cause 500 errors
         req.setShouldCache(false);
         // add the request to the request queue
