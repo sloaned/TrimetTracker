@@ -1,17 +1,18 @@
 package com.example.catalyst.trimettracker.events;
 
+import com.example.catalyst.trimettracker.models.Vehicle;
+
+import java.util.ArrayList;
+
 /**
  * Created by dsloane on 7/8/2016.
  */
 public class LocationEvent {
-    private float latitude;
-    private float longitude;
+    private ArrayList<Vehicle> vehicles;
 
-    public LocationEvent(float latitude, float longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public LocationEvent(ArrayList<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 
-    public float getLatitude() { return latitude; }
-    public float getLongitude() { return longitude; }
+    public ArrayList<Vehicle> getVehicles() { return vehicles; }
 }

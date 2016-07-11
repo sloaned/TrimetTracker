@@ -10,6 +10,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.catalyst.trimettracker.AppController;
 import com.example.catalyst.trimettracker.events.LocationEvent;
+import com.example.catalyst.trimettracker.models.Vehicle;
 import com.example.catalyst.trimettracker.util.ApiConstants;
 import com.example.catalyst.trimettracker.util.NetworkConstants;
 
@@ -18,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -29,22 +31,37 @@ public class ApiCaller {
     public static final String TAG = ApiCaller.class.getSimpleName();
 
     public void getVehicleLocation(String vehicleId) {
-        String url = NetworkConstants.TRIMET_VEHICLES_API + "ids/" + vehicleId + "/" + ApiConstants.TRIMET_QUERY_SUFFIX;
+        String url = NetworkConstants.TRIMET_VEHICLES_API + "/" + ApiConstants.TRIMET_QUERY_SUFFIX;
+        //"ids/" + vehicleId +
 
         Log.d(TAG, "url = " + url);
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+                Log.d(TAG, "something worked");
                 try {
                     JSONObject resultSet = response.getJSONObject("resultSet");
                     JSONArray vehicles = resultSet.getJSONArray("vehicle");
-                    JSONObject vehicle = vehicles.getJSONObject(0);
 
-                    float longitude = (float) vehicle.getDouble("longitude");
-                    float latitude = (float) vehicle.getDouble("latitude");
+                    ArrayList<Vehicle> vehiclesList = new ArrayList<>();
 
-                    EventBus.getDefault().post(new LocationEvent(latitude, longitude));
+                    for (int i = 0; i < vehicles.length(); i++) {
+                        JSONObject vehicle = vehicles.getJSONObject(i);
+                        Vehicle v = new Vehicle();
+
+                        float longitude = (float) vehicle.getDouble("longitude");
+                        float latitude = (float) vehicle.getDouble("latitude");
+                        String routeNumber = vehicle.getString("routeNumber");
+                        v.setLatitude(latitude);
+                        v.setLongitude(longitude);
+                        v.setRouteNumber(routeNumber);
+
+                        vehiclesList.add(v);
+                    }
+
+
+                    EventBus.getDefault().post(new LocationEvent(vehiclesList));
 
                 } catch (JSONException e) {
                     Log.e(TAG, "Error: " + e.getMessage());
@@ -53,6 +70,7 @@ public class ApiCaller {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "got a bad error");
                 //TODO: should probably have a different callback function in case of error
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
             }
