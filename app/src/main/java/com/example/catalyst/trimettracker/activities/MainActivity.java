@@ -86,14 +86,14 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         for (Vehicle v : event.getVehicles()) {
             LatLng location = new LatLng(v.getLatitude(), v.getLongitude());
 
-            Arrow arrow = new Arrow(this, v.getRouteNumber(), 30);
-            Bitmap arrowMap = Bitmap.createBitmap(arrow.getIntrinsicWidth(), arrow.getIntrinsicHeight()-64, Bitmap.Config.ARGB_8888);
+            Arrow arrow = new Arrow(this, v.getRouteNumber(), v.getBearing());
+            Bitmap arrowMap = Bitmap.createBitmap(arrow.getIntrinsicWidth(), arrow.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
 
             Canvas canvas = new Canvas();
             canvas.setBitmap(arrowMap);
-            arrow.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            arrow.setBounds(0, 0, canvas.getWidth(), canvas.getHeight()-64); // -64
             arrow.draw(canvas);
-            //mMap.addMarker(new MarkerOptions().position(location).title(v.getRouteNumber()).icon(BitmapDescriptorFactory.fromBitmap(arrowMap)));//.icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
+            mMap.addMarker(new MarkerOptions().position(location).title(v.getRouteNumber()).icon(BitmapDescriptorFactory.fromBitmap(arrowMap)));//.icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
 
 
             TextDrawable drawable = new TextDrawable(this, v.getRouteNumber());
@@ -106,7 +106,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
             mMap.addMarker(new MarkerOptions().position(location).title(v.getRouteNumber()).icon(BitmapDescriptorFactory.fromBitmap(bitmap)));//.icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
            // mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-            //mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
+            //mMap.moveCamera(CameraUpdateFactory.zoomTo(10));
         }
 
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(location));

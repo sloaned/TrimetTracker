@@ -40,7 +40,7 @@ public class Arrow extends Drawable {
         paint.setColor(ContextCompat.getColor(mContext, R.color.arrow));
         paint.setStyle(Paint.Style.FILL);
 
-        mIntrinsicHeight = (int) (text.length() + 160);
+        mIntrinsicHeight = (int) (text.length() + 224);
         mIntrinsicWidth = (int) (text.length() + 160);
 
     }
@@ -50,54 +50,35 @@ public class Arrow extends Drawable {
 
         float cosine = (float) Math.cos(Math.toRadians((double) bearing));
         float sine = (float) Math.sin(Math.toRadians((double) bearing));
-        float tangent = (float) Math.tan(Math.toRadians((double) bearing));
 
-        float arrowTangent = (float) Math.tan(Math.toRadians(40.0));
-        float arrowCotangent = (float) Math.atan(Math.toRadians(40.0));
+        float arrowCosine = (float) Math.cos(Math.toRadians(140.0 + bearing));
+        float arrowSine = (float) Math.sin(Math.toRadians(140.0 + bearing));
+
+        float arrow2Cosine = (float) Math.cos(Math.toRadians(220.0 + bearing));
+        float arrow2Sine = (float) Math.sin(Math.toRadians(220.0 + bearing));
 
         Log.d(TAG, "cosine = " + cosine + ", sine = " + sine);
 
         path.moveTo((float) mIntrinsicWidth-80, (float) mIntrinsicHeight-80);
 
-        if (bearing <= 90) {
-            /*
-            float x1 = (float) mIntrinsicWidth-80 - (sine*4);
-            float y1 = (float) mIntrinsicHeight-80 + (cosine*4);
-            float x2 = x1 + (70f * cosine);
-            float y2 = y1 - (70f * sine);
-            float x3 = x2 - (8f * cosine);
-            float y3 = y2 - (12f * sine);
-            float x4 = x3 + (8f * cosine);
-            float y4 = y3 - (8f * sine);
-            float x5 = x4 + (10f * cosine);
-            float y5 = y4 + (16f * sine);
-            float x6 = x5 - (10f * cosine);
-            float y6 = y5 + (16f * sine);
-            float x7 = x6 - (8f * cosine);
-            float y7 = y6 + (8f * sine);
-            float x8 = x7 + (8f * cosine);
-            float y8 = y7 - (12f * sine);
-            float x9 = x8 - (70f * cosine);
-            float y9 = y8 + (70f * sine);  */
-
             float x1 = (float) mIntrinsicWidth-80 - (sine*4);
             float y1 = (float) mIntrinsicHeight-80 - (cosine*4);
-            float x2 = x1 + (70f * cosine);
-            float y2 = y1 - (70f * sine);
-            float x3 = x2 - (12f * sine);
-            float y3 = y2 - (12f * cosine);
+            float x2 = x1 + (67.233f * cosine);
+            float y2 = y1 - (67.233f * sine);
+            float x3 = x2 + (15.557f * arrowCosine);
+            float y3 = y2 - (15.557f * arrowSine);
             float x4 = x3 + (8f * cosine);
             float y4 = y3 - (8f * sine);
-            float x5 = x4 + (16f * cosine);
-            float y5 = y4 + (16f * sine);
-            float x6 = x5 + (16f * sine);
-            float y6 = y5 + (16f * cosine);
+            float x5 = x4 - (20.324f * arrowCosine);
+            float y5 = y4 + (20.324f * arrowSine);
+            float x6 = x5 + (20.324f * arrow2Cosine);
+            float y6 = y5 - (20.324f * arrow2Sine);
             float x7 = x6 - (8f * cosine);
             float y7 = y6 + (8f * sine);
-            float x8 = x7 + (12f * sine);
-            float y8 = y7 - (12f * cosine);
-            float x9 = x8 - (70f * cosine);
-            float y9 = y8 + (70f * sine);
+            float x8 = x7 - (15.557f * arrow2Cosine);
+            float y8 = y7 + (15.557f * arrow2Sine);
+            float x9 = x8 - (67.233f * cosine);
+            float y9 = y8 + (67.233f * sine);
 
 
             path.lineTo(x1, y1);
@@ -114,7 +95,7 @@ public class Arrow extends Drawable {
 
 
 
-        }
+
 
 
 

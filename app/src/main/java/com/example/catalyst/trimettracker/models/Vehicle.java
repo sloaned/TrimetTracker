@@ -8,6 +8,7 @@ public class Vehicle {
     private Float latitude;
     private Float longitude;
     private String routeNumber;
+    private int bearing;
 
     public Float getLatitude() { return latitude; }
     public void setLatitude(Float latitude) { this.latitude = latitude; }
@@ -15,4 +16,6 @@ public class Vehicle {
     public void setLongitude(Float longitude) { this.longitude = longitude; }
     public String getRouteNumber() { return routeNumber; }
     public void setRouteNumber(String routeNumber) { this.routeNumber = routeNumber; }
+    public int getBearing() { return bearing; }
+    public void setBearing(int bearing) { this.bearing = bearing; }
 }

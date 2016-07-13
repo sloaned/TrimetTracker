@@ -53,9 +53,16 @@ public class ApiCaller {
                         float longitude = (float) vehicle.getDouble("longitude");
                         float latitude = (float) vehicle.getDouble("latitude");
                         String routeNumber = vehicle.getString("routeNumber");
+                        int bearing = vehicle.getInt("bearing");
+                        if (bearing < 90) {
+                            bearing += 270;
+                        } else {
+                            bearing -= 90;
+                        }
                         v.setLatitude(latitude);
                         v.setLongitude(longitude);
                         v.setRouteNumber(routeNumber);
+                        v.setBearing(bearing);
 
                         vehiclesList.add(v);
                     }
