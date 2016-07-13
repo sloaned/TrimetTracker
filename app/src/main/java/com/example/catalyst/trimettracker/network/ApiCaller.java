@@ -31,7 +31,7 @@ public class ApiCaller {
     public static final String TAG = ApiCaller.class.getSimpleName();
 
     public void getVehicleLocation(String vehicleId) {
-        String url = NetworkConstants.TRIMET_VEHICLES_API + "/" + ApiConstants.TRIMET_QUERY_SUFFIX;
+        String url = NetworkConstants.TRIMET_VEHICLES_API + "routes/12,17,20/" + ApiConstants.TRIMET_QUERY_SUFFIX;
         //"ids/" + vehicleId +
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -48,11 +48,12 @@ public class ApiCaller {
                         Vehicle v = new Vehicle();
 
                         int bearing = vehicle.getInt(ApiConstants.TRIMET_VEHICLE_BEARING);
+                        bearing = 360-bearing;
 
-                        if (bearing < 90) {
-                            bearing += 270;
+                        if (bearing >= 270) {
+                            bearing -= 270;
                         } else {
-                            bearing -= 90;
+                            bearing += 90;
                         }
 
                         v.setLatitude((float) vehicle.getDouble(ApiConstants.TRIMET_VEHICLE_LATITUDE));

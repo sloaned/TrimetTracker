@@ -52,6 +52,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap = googleMap;
 
+        mMap.getUiSettings().setRotateGesturesEnabled(false);
+
+
         LinearLayout layout = (LinearLayout) ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.circle_text, null);
 
         tv = (TextView) layout.findViewById(R.id.circle_text);
