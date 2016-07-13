@@ -9,6 +9,7 @@ public class Vehicle {
     private Float longitude;
     private String routeNumber;
     private int bearing;
+    private String signMessageLong;
 
     public Float getLatitude() { return latitude; }
     public void setLatitude(Float latitude) { this.latitude = latitude; }
@@ -18,4 +19,6 @@ public class Vehicle {
     public void setRouteNumber(String routeNumber) { this.routeNumber = routeNumber; }
     public int getBearing() { return bearing; }
     public void setBearing(int bearing) { this.bearing = bearing; }
+    public String getSignMessageLong() { return signMessageLong; }
+    public void setSignMessageLong(String signMessageLong) { this.signMessageLong = signMessageLong; }
 }

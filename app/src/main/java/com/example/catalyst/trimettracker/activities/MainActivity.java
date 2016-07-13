@@ -54,16 +54,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         LinearLayout layout = (LinearLayout) ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.circle_text, null);
 
-
         tv = (TextView) layout.findViewById(R.id.circle_text);
-
-        /*LatLng location = new LatLng(42.6049, -70.6527);
-
-        mMap.addMarker(new MarkerOptions().position(location).title("Hey"));//.icon(BitmapDescriptorFactory.fromResource(R.drawable.vehicle_label)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
- */
-
 
         final ApiCaller caller = new ApiCaller();
 
@@ -86,16 +77,17 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         for (Vehicle v : event.getVehicles()) {
             LatLng location = new LatLng(v.getLatitude(), v.getLongitude());
 
+            // add the arrow to point the direction the vehicle is going to the map
             Arrow arrow = new Arrow(this, v.getRouteNumber(), v.getBearing());
             Bitmap arrowMap = Bitmap.createBitmap(arrow.getIntrinsicWidth(), arrow.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
 
             Canvas canvas = new Canvas();
             canvas.setBitmap(arrowMap);
-            arrow.setBounds(0, 0, canvas.getWidth(), canvas.getHeight()-64); // -64
+            arrow.setBounds(0, 0, canvas.getWidth(), canvas.getHeight()-64);
             arrow.draw(canvas);
-            mMap.addMarker(new MarkerOptions().position(location).title(v.getRouteNumber()).icon(BitmapDescriptorFactory.fromBitmap(arrowMap)));//.icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
+            mMap.addMarker(new MarkerOptions().position(location).title(v.getRouteNumber()).icon(BitmapDescriptorFactory.fromBitmap(arrowMap)).anchor(0.5f, 0.5f));//.icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
 
-
+            // add the circle containing the vehicle route number to the map
             TextDrawable drawable = new TextDrawable(this, v.getRouteNumber());
             Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
 
@@ -104,12 +96,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
             drawable.draw(canvas);
 
-            mMap.addMarker(new MarkerOptions().position(location).title(v.getRouteNumber()).icon(BitmapDescriptorFactory.fromBitmap(bitmap)));//.icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
+            mMap.addMarker(new MarkerOptions().position(location).title(v.getSignMessageLong()).icon(BitmapDescriptorFactory.fromBitmap(bitmap)).anchor(0.5f, 0.5f));//.icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
            // mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
             //mMap.moveCamera(CameraUpdateFactory.zoomTo(10));
         }
 
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
     }
 
     @Override

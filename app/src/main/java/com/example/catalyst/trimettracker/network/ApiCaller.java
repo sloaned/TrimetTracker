@@ -39,7 +39,6 @@ public class ApiCaller {
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, "something worked");
                 try {
                     JSONObject resultSet = response.getJSONObject("resultSet");
                     JSONArray vehicles = resultSet.getJSONArray("vehicle");
@@ -50,19 +49,19 @@ public class ApiCaller {
                         JSONObject vehicle = vehicles.getJSONObject(i);
                         Vehicle v = new Vehicle();
 
-                        float longitude = (float) vehicle.getDouble("longitude");
-                        float latitude = (float) vehicle.getDouble("latitude");
-                        String routeNumber = vehicle.getString("routeNumber");
-                        int bearing = vehicle.getInt("bearing");
+                        int bearing = vehicle.getInt(ApiConstants.TRIMET_VEHICLE_BEARING);
+
                         if (bearing < 90) {
                             bearing += 270;
                         } else {
                             bearing -= 90;
                         }
-                        v.setLatitude(latitude);
-                        v.setLongitude(longitude);
-                        v.setRouteNumber(routeNumber);
+
+                        v.setLatitude((float) vehicle.getDouble(ApiConstants.TRIMET_VEHICLE_LATITUDE));
+                        v.setLongitude((float) vehicle.getDouble(ApiConstants.TRIMET_VEHICLE_LONGITUDE));
+                        v.setRouteNumber(vehicle.getString(ApiConstants.TRIMET_VEHICLE_ROUTE_NUMBER));
                         v.setBearing(bearing);
+                        v.setSignMessageLong(vehicle.getString(ApiConstants.TRIMET_VEHICLE_SIGN_MESSAGE_LONG));
 
                         vehiclesList.add(v);
                     }
@@ -77,7 +76,6 @@ public class ApiCaller {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "got a bad error");
                 //TODO: should probably have a different callback function in case of error
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
             }

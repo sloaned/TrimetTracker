@@ -40,7 +40,7 @@ public class Arrow extends Drawable {
         paint.setColor(ContextCompat.getColor(mContext, R.color.arrow));
         paint.setStyle(Paint.Style.FILL);
 
-        mIntrinsicHeight = (int) (text.length() + 224);
+        mIntrinsicHeight = (int) (text.length() + 160);
         mIntrinsicWidth = (int) (text.length() + 160);
 
     }
@@ -56,8 +56,6 @@ public class Arrow extends Drawable {
 
         float arrow2Cosine = (float) Math.cos(Math.toRadians(220.0 + bearing));
         float arrow2Sine = (float) Math.sin(Math.toRadians(220.0 + bearing));
-
-        Log.d(TAG, "cosine = " + cosine + ", sine = " + sine);
 
         path.moveTo((float) mIntrinsicWidth-80, (float) mIntrinsicHeight-80);
 
