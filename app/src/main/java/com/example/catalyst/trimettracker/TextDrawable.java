@@ -43,8 +43,8 @@ public class TextDrawable extends Drawable {
         textPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         textPaint.setTextAlign(Paint.Align.LEFT);
 
-        mIntrinsicHeight = (int) (paint.measureText(text, 0, text.length()) + 24);
-        mIntrinsicWidth = (int) (paint.measureText(text, 0, text.length()) + 24);
+        mIntrinsicHeight = (int) (paint.measureText(text, 0, text.length()) + 28);//24
+        mIntrinsicWidth = (int) (paint.measureText(text, 0, text.length()) + 28);
 
         path.addCircle(mIntrinsicHeight/2, mIntrinsicHeight/2, mIntrinsicHeight/2, Path.Direction.CCW);
 

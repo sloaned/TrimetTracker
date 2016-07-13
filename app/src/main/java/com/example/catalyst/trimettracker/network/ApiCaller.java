@@ -34,8 +34,6 @@ public class ApiCaller {
         String url = NetworkConstants.TRIMET_VEHICLES_API + "/" + ApiConstants.TRIMET_QUERY_SUFFIX;
         //"ids/" + vehicleId +
 
-        Log.d(TAG, "url = " + url);
-
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -81,7 +79,6 @@ public class ApiCaller {
             }
         });
 
-        Log.d(TAG, "req = " + req);
         // avoid data caching on the device, which can cause 500 errors
         req.setShouldCache(false);
         // add the request to the request queue

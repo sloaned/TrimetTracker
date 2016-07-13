@@ -85,7 +85,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             canvas.setBitmap(arrowMap);
             arrow.setBounds(0, 0, canvas.getWidth(), canvas.getHeight()-64);
             arrow.draw(canvas);
-            mMap.addMarker(new MarkerOptions().position(location).title(v.getRouteNumber()).icon(BitmapDescriptorFactory.fromBitmap(arrowMap)).anchor(0.5f, 0.5f));//.icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
+            mMap.addMarker(new MarkerOptions().position(location).icon(BitmapDescriptorFactory.fromBitmap(arrowMap)).anchor(0.5f, 0.5f));//.icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
 
             // add the circle containing the vehicle route number to the map
             TextDrawable drawable = new TextDrawable(this, v.getRouteNumber());
