@@ -1,19 +1,16 @@
 package com.example.catalyst.trimettracker.activities;
 
-import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.View;
-import android.view.WindowInsets;
-import android.widget.FrameLayout;
+import android.view.LayoutInflater;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.catalyst.trimettracker.Arrow;
 import com.example.catalyst.trimettracker.TextDrawable;
 import com.example.catalyst.trimettracker.events.LocationEvent;
 import com.example.catalyst.trimettracker.models.Vehicle;
@@ -31,11 +28,15 @@ import org.greenrobot.eventbus.Subscribe;
  */
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private final String TAG = MainActivity.class.getSimpleName();
+
     final Handler timerHandler = new Handler();
     // runnable that will run with the timerHandler
     private Runnable timerRunnable;
 
     private GoogleMap mMap;
+    private TextView tv;
+    private Bitmap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
+
+        LinearLayout layout = (LinearLayout) ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.circle_text, null);
+
+
+        tv = (TextView) layout.findViewById(R.id.circle_text);
 
         /*LatLng location = new LatLng(42.6049, -70.6527);
 
@@ -64,7 +71,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         timerRunnable = new Runnable() {
             @Override
             public void run() {
-                caller.getVehicleLocation("3168");
+                caller.getVehicleLocation("3101");
                 timerHandler.postDelayed(this, 10000);
             }
         };
@@ -79,36 +86,27 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         for (Vehicle v : event.getVehicles()) {
             LatLng location = new LatLng(v.getLatitude(), v.getLongitude());
 
-            TextDrawable circle = new TextDrawable(this, v.getRouteNumber());
-           // Drawable circle = getResources().getDrawable(R.drawable.vehicle_label);
+            Arrow arrow = new Arrow(this, v.getRouteNumber(), 30);
+            Bitmap arrowMap = Bitmap.createBitmap(arrow.getIntrinsicWidth(), arrow.getIntrinsicHeight()-64, Bitmap.Config.ARGB_8888);
+
             Canvas canvas = new Canvas();
-            Bitmap bitmap = Bitmap.createBitmap(circle.getIntrinsicWidth(), circle.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+            canvas.setBitmap(arrowMap);
+            arrow.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            arrow.draw(canvas);
+            //mMap.addMarker(new MarkerOptions().position(location).title(v.getRouteNumber()).icon(BitmapDescriptorFactory.fromBitmap(arrowMap)));//.icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
+
+
+            TextDrawable drawable = new TextDrawable(this, v.getRouteNumber());
+            Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+
+            canvas = new Canvas();
             canvas.setBitmap(bitmap);
-            circle.setBounds(0, 0, circle.getIntrinsicWidth(), circle.getIntrinsicHeight());
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
 
-            circle.draw(canvas);
-            BitmapDescriptor bd = BitmapDescriptorFactory.fromBitmap(bitmap);
-
-            /*
-            Drawable circle = getResources().getDrawable(R.drawable.circle_shape);
-Canvas canvas = new Canvas();
-Bitmap bitmap = Bitmap.createBitmap(circle.getIntrinsicWidth(), circle.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-canvas.setBitmap(bitmap);
-circle.setBounds(0, 0, circle.getIntrinsicWidth(), circle.getIntrinsicHeight());
-circle.draw(canvas);
-BitmapDescriptor bd = BitmapDescriptorFactory.fromBitmap(bitmap);
-
-map.addMarker(new MarkerOptions()
-                .position(new LatLng(41.906991, 12.453360))
-                .title("My Marker")
-                .icon(bd)
-);
-             */
-
-            mMap.addMarker(new MarkerOptions().position(location).title(v.getRouteNumber()).icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
-
+            mMap.addMarker(new MarkerOptions().position(location).title(v.getRouteNumber()).icon(BitmapDescriptorFactory.fromBitmap(bitmap)));//.icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
            // mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-           // mMap.moveCamera(CameraUpdateFactory.zoomTo(10));
+            //mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
         }
 
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(location));

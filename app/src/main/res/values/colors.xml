@@ -6,4 +6,5 @@
 
     <color name="ring_border">#000000</color>
     <color name="ring_background">#c6c1c1</color>
+    <color name="arrow">#000000</color>
 </resources>
