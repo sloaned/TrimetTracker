@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_container"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
+    <TextView
+        android:text="@string/route_picker_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        map:layout_constraintLeft_toLeftOf="@+id/root_container"
+        android:layout_marginStart="16dp"
+        map:layout_constraintTop_toTopOf="@+id/root_container"
+        android:layout_marginTop="16dp"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        map:layout_constraintTop_toTopOf="@+id/textView"
+        map:layout_constraintRight_toRightOf="@+id/root_container"
+        android:layout_marginEnd="16dp"
+        map:layout_constraintBottom_toBottomOf="@+id/textView"/>
+
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_width="0dp"
+              android:layout_height="0dp"
               android:id="@+id/map"
               tools:context=".MapsActivity"
-              android:name="com.google.android.gms.maps.SupportMapFragment" />
+              android:name="com.google.android.gms.maps.SupportMapFragment"
+              map:layout_constraintLeft_toLeftOf="@+id/root_container"
+              map:layout_constraintTop_toBottomOf="@+id/spinner"
+              android:layout_marginTop="8dp"
+              map:layout_constraintRight_toRightOf="@+id/root_container"
+              map:layout_constraintBottom_toBottomOf="@+id/root_container"
+              android:layout_marginBottom="16dp"
+              map:layout_constraintHorizontal_bias="0.0"/>
 
-</FrameLayout>
+    <!-- tools:layout_editor_absoluteWidth="384dp"
+              tools:layout_editor_absoluteHeight="511dp" -->
+
+
+</android.support.constraint.ConstraintLayout>

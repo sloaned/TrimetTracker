@@ -42,7 +42,6 @@ public class Arrow extends Drawable {
 
         mIntrinsicHeight = (int) (text.length() + 160);
         mIntrinsicWidth = (int) (text.length() + 160);
-
     }
 
     @Override
@@ -77,7 +76,6 @@ public class Arrow extends Drawable {
         float y8 = y7 + (15.557f * arrow2Sine);
         float x9 = x8 - (67.233f * cosine);
         float y9 = y8 + (67.233f * sine);
-
 
         path.lineTo(x1, y1);
         path.lineTo(x2, y2);

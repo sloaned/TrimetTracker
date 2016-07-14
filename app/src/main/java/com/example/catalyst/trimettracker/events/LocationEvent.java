@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class LocationEvent {
     private ArrayList<Vehicle> vehicles;
 
+    public LocationEvent() {}
     public LocationEvent(ArrayList<Vehicle> vehicles) {
         this.vehicles = vehicles;
     }

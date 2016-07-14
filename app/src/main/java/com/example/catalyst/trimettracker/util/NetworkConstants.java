@@ -6,5 +6,8 @@ package com.example.catalyst.trimettracker.util;
 public class NetworkConstants {
 
     public static final String TRIMET_BASE_API = "http://developer.trimet.org/ws/v2/";
+    public static final String TRIMET_BASE_API_V1 = "http://developer.trimet.org/ws/v1/";
     public static final String TRIMET_VEHICLES_API = TRIMET_BASE_API + "vehicles/";
+
+    public static final String TRIMET_ROUTES_API = TRIMET_BASE_API_V1 + "routeConfig/";
 }
